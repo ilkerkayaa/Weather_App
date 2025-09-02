@@ -1,11 +1,8 @@
 require("dotenv").config();
-
 const apiKey = process.env.API_KEY;
-console.log(apiKey); // test için
-
+console.log("API Key:", apiKey);
 // Ana hava durumu fonksiyonu
 function getWeather() {
-  //const apiKey = "98fd29e7288e3486d83171c437721fe7";
   const city = document.getElementById("city").value;
 
   // Şehir boşsa kullanıcıyı uyarır
@@ -14,8 +11,8 @@ function getWeather() {
     return;
   }
 
-  const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.apiKey}`;
-  const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${process.env.apiKey}`;
+  const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+  const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
 
   // Mevcut hava durumu verisini çeker
   fetch(currentWeatherUrl)
@@ -123,10 +120,10 @@ function showError(message) {
   }, 3000);
 }
 
-// document.getElementById("city").addEventListener("keydown", function (event) {
-//   if (event.key === "Enter") {
-//     event.preventDefault();
-//     getWeather();
-//     city.value = "";
-//   }
-// });
+document.getElementById("city").addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    getWeather();
+    city.value = "";
+  }
+});
