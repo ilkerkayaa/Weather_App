@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <meta
+      name="description"
+      content="Check the real-time weather and hourly forecast for any city worldwide. Get instant temperature updates, weather conditions, and accurate predictions."
+    />
+    <meta
+      name="keywords"
+      content="weather, weather app, forecast, temperature, city weather, live weather, hourly forecast, OpenWeather"
+    />
+    <meta name="author" content="Ilker KAYA" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="weather-container">
+      <h2>Weather App</h2>
+      <input type="text" id="city" placeholder="Enter City" />
+      <button onclick="getWeather()">Search</button>
+
+      <div id="error-message"></div>
+
+      <img id="weather-icon" alt="Weather Icon" />
+
+      <div id="temp-div"></div>
+
+      <div id="weather-info"></div>
+
+      <div id="hourly-forecast"></div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
