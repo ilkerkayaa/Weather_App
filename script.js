@@ -1,41 +1,22 @@
-require("dotenv").config();
-const apiKey = process.env.API_KEY;
-console.log("API Key:", apiKey);
-// Ana hava durumu fonksiyonu
 function getWeather() {
   const city = document.getElementById("city").value;
-
-  // Şehir boşsa kullanıcıyı uyarır
   if (!city) {
     showError("Please enter a city");
     return;
   }
 
-  const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-  const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
+  const url = `http://localhost:5000/weather?city=${city}`;
 
-  // Mevcut hava durumu verisini çeker
-  fetch(currentWeatherUrl)
+  fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      displayWeather(data);
-    })
-
-    // Hata durumunda konsola yazdırır ve kullanıcıyı bilgilendirir
-    .catch((error) => {
-      console.error("Error fetching current weather data:", error);
-      showError("Error fetching current weather data. Please try again.");
-    });
-
-  // Saatlik hava tahmini verisini çeker
-  fetch(forecastUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      displayHourlyForecast(data.list);
+      // Backend'den gelen JSON'u kullanır
+      displayWeather(data.current); // anlık hava durumu
+      displayHourlyForecast(data.forecast.list); // saatlik tahmin
     })
     .catch((error) => {
-      console.error("Error fetching hourly forecast data:", error);
-      showError("Error fetching hourly forecast data. Please try again.");
+      console.error("Error fetching weather data:", error);
+      showError("Weather data could not be fetched. Please try again.");
     });
 }
 
@@ -56,7 +37,7 @@ function displayWeather(data) {
   // API'den gelen verileri değişkenlere atar
   else {
     const cityName = data.name;
-    const temperature = Math.round(data.main.temp - 273.15);
+    const temperature = Math.round(data.main.temp);
     const description = data.weather[0].description;
     const iconCode = data.weather[0].icon;
     const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@4x.png`;
@@ -87,7 +68,7 @@ function displayHourlyForecast(hourlyData) {
   next24Hours.forEach((item) => {
     const dateTime = new Date(item.dt * 1000); // Unix timestamp'ı normal tarihe çevir
     const hour = dateTime.getHours();
-    const temperature = Math.round(item.main.temp - 273.15); // Kelvin'den Celsius'a çevirir
+    const temperature = Math.round(item.main.temp);
     const iconCode = item.weather[0].icon;
     const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
 
